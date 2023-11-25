@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const signInBtn = document.getElementById("signIn");
+        const signUpBtn = document.getElementById("signUp");
+        const fistForm = document.getElementById("form1");
+        const secondForm = document.getElementById("form2");
+        const container = document.querySelector(".container");
+
+        signInBtn.addEventListener("click", () => {
+            container.classList.remove("right-panel-active");
+        });
+
+        signUpBtn.addEventListener("click", () => {
+            container.classList.add("right-panel-active");
+        });
+
+        fistForm.addEventListener("submit", (e) => e.preventDefault());
+        secondForm.addEventListener("submit", (e) => e.preventDefault());
+
+        // add user
+        const emailup = document.querySelector(".emailup");
+        const userup = document.querySelector(".userup");
+        const passup = document.querySelector(".passup");
+        const emailin = document.querySelector(".emailin");
+        const passin = document.querySelector(".passin");
+        const btnup = document.querySelector(".signupbtn");
+        const btnin = document.querySelector(".signinbtn");
+        const userreg = /^[a-z0-9_-]{3,15}$/;
+        const emailreg = /[^@ \t\r\n]+@[^@ \t\r\n]+.[^@ \t\r\n]+/;
+        const passreg =
+            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
+        const url = new URL(
+            "https://6533a095d80bd20280f6a3bd.mockapi.io/moeinparvizi/users",
+        );
+        let flagvalue,
+            flagvaluein,
+            flagreg,
+            flagfind = 0;
+
+        const sweetAlert2 = (text, icon) => {
+            Swal.fire({
+                title: text,
+                background: "transparent",
+                icon: icon,
+                confirmButtonText: "try again",
+                timer: "30000",
+                backdrop: "rgba(0,0,0,.7)",
+                color: "#eee",
+                showClass: {
+                    popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                    popup: "animate__animated animate__fadeOutUp",
+                },
+            });
+        };
+        const addToApi = () => {
+            const newUser = {
+                user: userup.value,
+                email: emailup.value,
+                password: passup.value,
+            };
+
+            fetch(url, {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                // Send your data in the request body as JSON
+                body: JSON.stringify(newUser),
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then((task) => {
+                    sweetAlert2(`dear ${task.user}, now you can signup`, "success");
+                    userup.value = "";
+                    emailup.value = "";
+                    passup.value = "";
+                    signInBtn.click();
+                })
+                .catch((error) => {
+                    sweetAlert2(`server is down . error : ${error.message}`, "error");
+                });
+        };
+
+        const UpRegChecker = () => {
+            flagreg = 0;
+            if (!userreg.test(userup.value)) {
+                sweetAlert2("your username is not valid", "error");
+            } else {
+                flagreg++;
+            }
+            // !passreg.test(passup.value)
+            if (!passreg.test(passup.value)) {
+                sweetAlert2("your password is not valid", "error");
+            } else {
+                flagreg++;
+            }
+            if (!emailreg.test(emailup.value)) {
+                sweetAlert2("your email is not valid", "error");
+            } else {
+                flagreg++;
+            }
+            if (flagreg == 3) {
+                addToApi();
+            }
+        };
+        const fillAllInput = () => {
+            sweetAlert2("fill all input", "error");
+        };
+        const valueUpChecker = () => {
+            flagvalue = 0;
+            if (emailup.value == null || emailup.value == "") {
+                fillAllInput();
+            } else {
+                flagvalue++;
+            }
+            if (passup.value == null || passup.value == "") {
+                fillAllInput();
+            } else {
+                flagvalue++;
+            }
+            if (userup.value == null || userup.value == "") {
+                fillAllInput();
+            } else {
+                flagvalue++;
+            }
+            if (flagvalue == 3) {
+                UpRegChecker();
+            }
+        };
+
+        btnup.addEventListener("click", () => {
+            valueUpChecker();
+        });
+
+        const findUserOk = (username) => {
+            document.querySelector(".container").remove();
+            document.querySelector(".usershow").style.transform = "translateX(0px)";
+            document.querySelector(".usershow__welcome").innerText = `
+    welcome ${username}, dear
+  `;
+        };
+        const findUserApi = () => {
+            fetch(url, {
+                method: "GET",
+                headers: { "content-type": "application/json" },
+            })
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then((tasks) => {
+                    flagfind = 0;
+                    for (let i in tasks) {
+                        if (
+                            emailin.value == tasks[i].email &&
+                            passin.value == tasks[i].password
+                        ) {
+                            username = tasks[i].user;
+                            window.localStorage.setItem("accCount", tasks[i].id);
+                            window.localStorage.setItem("user", tasks[i].user);
+                            findUserOk(username);
+                            break;
+                        } else {
+                            flagfind++;
+                        }
+                    }
+                    if (flagfind == tasks.length) {
+                        sweetAlert2("user not find", "error");
+                    }
+                })
+                .catch((error) => {
+                    sweetAlert2(`server is down, ${error.message}`, "error");
+                });
+        };
+        const valueInChecker = () => {
+            flagvaluein = 0;
+            if (passin.value == null || passin.value == "") {
+                fillAllInput();
+            } else {
+                flagvaluein++;
+            }
+            if (emailin.value == null || emailin.value == "") {
+                fillAllInput();
+            } else {
+                flagvaluein++;
+            }
+            if (flagvaluein == 2) {
+                findUserApi();
+            }
+        };
+
+        btnin.addEventListener("click", () => {
+            valueInChecker();
+        });
+
+        // reload page when click on logout button
+        const reload = () => {
+            window.localStorage.removeItem("accCount");
+            window.localStorage.removeItem("user");
+            location.reload();
+        };
+        document.querySelector(".logout").addEventListener("click", () => {
+            reload();
+        });
+
+        // delete account
+        document.querySelector(".deleteuser").addEventListener("click", () => {
+            const indexcount = window.localStorage.getItem("accCount");
+            fetch(
+                `https://6533a095d80bd20280f6a3bd.mockapi.io/moeinparvizi/users/${indexcount}`,
+                {
+                    method: "DELETE",
+                },
+            )
+                .then((res) => {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                    // handle error
+                })
+                .then((task) => {
+                    reload();
+                })
+                .catch((error) => {
+                    // handle error
+                });
+        });
+
+        // check local storage
+        if (!(window.localStorage.getItem("accCount") == null)) {
+            const user = window.localStorage.getItem("user");
+            findUserOk(user);
+        }
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/master.css" />
+    <link rel="stylesheet" href="assets/css/sweetalert2.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <script src="assets/js/sweetalert2.js"></script>
+    <script src="assets/js/script.js" defer></script>
+    <title>moein parvizi</title>
+</head>
+
+<body>
+    <div class="container right-panel-active">
+        <!-- Sign Up -->
+        <div class="container__form container--signup">
+            <form action="#" class="form" id="form1">
+                <h2 class="form__title">Sign Up</h2>
+                <!-- moeinparvizvi -->
+                <input type="text" placeholder="User" class="input userup" />
+                <input type="email" placeholder="Email" class="input emailup" />
+                <input type="password" placeholder="Password" class="input passup" />
+                <button class="btn signupbtn">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Sign In -->
+        <div class="container__form container--signin">
+            <form action="#" class="form" id="form2">
+                <h2 class="form__title">Sign In</h2>
+                <input type="email" placeholder="Email" class="input emailin" />
+                <input type="password" placeholder="Password" class="input passin" />
+                <a href="#" class="link">Forgot your password?</a>
+                <button class="btn signinbtn">Sign In</button>
+            </form>
+        </div>
+
+        <!-- Overlay -->
+        <div class="container__overlay">
+            <div class="overlay">
+                <div class="overlay__panel overlay--left">
+                    <button class="btn" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay__panel overlay--right">
+                    <button class="btn" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="usershow">
+        <h1 class="usershow__welcome"></h1>
+        <div class="usershow__containshow">
+            <div class="containshow__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                    <path fill-rule="evenodd"
+                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                </svg>
+            </div>
+            <div class="containshow__ourdel">
+                <button id="btn" class="logout">logout</button>
+                <button id="btn" class="deleteuser">delete account</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="me">
+        made by<a href="https://github.com/moeinparvizi"> moeinparvizi</a>
+    </div>
+</body>
+
+</html>
