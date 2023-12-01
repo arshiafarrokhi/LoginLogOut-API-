@@ -134,5 +134,7 @@ const findUserOk = (username) => {
 
 document.getElementById('log-out').addEventListener("click", () => {
     // location.reload();
-    browser.tabs.reload();
+    // browser.tabs.reload();
+    var win = window.open(url, "foobar");
+    win.location.reload();
 });
