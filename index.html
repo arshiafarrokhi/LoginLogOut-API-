@@ -1,38 +1,47 @@
 <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login & Logout</title>
-        <link rel="stylesheet" href="assets/css/master.css">
-        <script src="assets/js/main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Logout</title>
+    <link rel="stylesheet" href="assets/css/master.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
     <div class="container" id="container">
         <div class="form-container sign-up">
-            <form>
+            <div class="form">
                 <h1>Create Account</h1>
                 <span>or use your email to registration</span>
                 <input id="sign-up-name" type="text" placeholder="Name">
+                <label class="labels " for="sign-up-name">*User Invalid</label>
+
                 <input id="sign-up-email" type="email" placeholder="Email">
+                <label class="labels" for="sign-up-email">*Email Invalid</label>
+
                 <input id="sign-up-password" type="password" placeholder="Password">
-                <button id="sign-up-button" onclick="para()">Sign Up</button>
-            </form>
+                <label class="labels" for="sign-up-password">*Password Invalid</label>
+
+                <button id="sign-up-button">Sign Up</button>
+            </div>
         </div>
         <!-- sign up -->
         <div class="form-container sign-in">
-            <form>
+            <div class="form">
                 <h1>Sign In</h1>
                 <span>or use your email/password</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button>Sign In</button>
-            </form>
+
+                <input id="sign-in-email" type="email" placeholder="Email">
+
+                <input id="sign-in-password" type="password" placeholder="Password">
+
+                <button id="sign-in-button">Sign In</button>
+            </div>
         </div>
         <!-- sign in -->
         <div class="toggle-container">
@@ -51,6 +60,9 @@
         </div>
         <!-- toggle -->
     </div>
+    <div class="user-welcome" style="display: none;">ssssssssss
+        <button id="log-out" class="button">LogOut</button>
+    </div>
 </body>
 <script>
     const container = document.getElementById('container');
@@ -67,6 +79,7 @@
 </script>
 <!-- toggle js -->
 
+<script src="assets/js/main.js"></script>
 <!-- main js -->
 
 </html>

@@ -65,7 +65,7 @@ body {
     border-color: #fff;
 }
 
-.container form {
+.container .form {
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -76,8 +76,8 @@ body {
 }
 
 .container input {
-    background-color: #eee;
     border: none;
+    background-color: #eee;
     margin: 8px 0;
     padding: 10px 15px;
     font-size: 13px;
@@ -211,4 +211,40 @@ body {
 
 .container.active .toggle-right {
     transform: translateX(200%);
+}
+
+.labels{
+    font-size: 14px;
+    margin:2px 0 ;
+    color: red; 
+    /* border: 1px solid blue; */
+    display: flex;
+    width: 100%;
+}
+
+.falseInput{
+    border: 1px solid red !important;
+}
+
+.button{
+    background-color: #512da8;
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.mb{
+    margin-bottom: 10px;
 }
