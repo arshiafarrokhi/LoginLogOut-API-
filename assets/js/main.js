@@ -120,18 +120,19 @@ signInButton.addEventListener('click', () => {
 
 // if signin sucsess
 
-document.getElementById("log-out").addEventListener("click", () => {
-    location.reload();
-    // browser.tabs.reload();
-});
 
 const findUserOk = (username) => {
     document.querySelector(".container").remove();
     document.querySelector(".user-welcome").style.display = 'flex';
     document.querySelector(".user-welcome").innerHTML = `
     <div class="flex-col">
-        <p class="mb">welcome dear ${username}</p>
-        <button id="log-out" class="button">LogOut</button>
+    <p class="mb">welcome dear ${username}</p>
+    <button id="log-out" class="button">LogOut</button>
     </div>
     `;
 };
+
+document.getElementById('log-out').addEventListener("click", () => {
+    // location.reload();
+    browser.tabs.reload();
+});
