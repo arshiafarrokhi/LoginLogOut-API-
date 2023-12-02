@@ -114,6 +114,7 @@ signInButton.addEventListener('click', () => {
         }
     }).catch(error => {
         // handle error
+        swal('Error 404', "please try again", "error");
     })
 
 })
