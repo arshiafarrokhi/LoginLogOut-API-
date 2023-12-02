@@ -1,8 +1,5 @@
 <br/>
 <p align="center">
-  <a href="https://arshiafarrokhi.github.io/LoginLogOut-API-/">
-    <img src="assets\img\bitcoin-btc-logo.png" alt="Logo" width="80" height="80">
-  </a>
 
   <h3 align="center">LoginLogOut use mock api</h3>
 
@@ -22,7 +19,7 @@
 
 ## About The Project
 
-<img src="assets\img\preview.png" alt="about">
+<img src="assets\images\Untitled.png" alt="about">
 
 Hints :
 
