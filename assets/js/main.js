@@ -124,17 +124,11 @@ signInButton.addEventListener('click', () => {
 const findUserOk = (username) => {
     document.querySelector(".container").remove();
     document.querySelector(".user-welcome").style.display = 'flex';
-    document.querySelector(".user-welcome").innerHTML = `
-    <div class="flex-col">
-    <p class="mb">welcome dear ${username}</p>
-    <button id="log-out" class="button">LogOut</button>
-    </div>
+    document.querySelector(".mb").innerHTML = `
+    welcome dear ${username}
     `;
 };
 
 document.getElementById('log-out').addEventListener("click", () => {
-    // location.reload();
-    // browser.tabs.reload();
-    var win = window.open(url, "foobar");
-    win.location.reload();
+    location.reload();
 });
