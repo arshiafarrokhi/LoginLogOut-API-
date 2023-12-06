@@ -222,6 +222,11 @@ body {
     width: 100%;
 }
 
+#pass-error{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .falseInput{
     border: 1px solid red !important;
 }

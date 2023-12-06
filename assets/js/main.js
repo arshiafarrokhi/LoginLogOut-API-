@@ -133,3 +133,7 @@ const findUserOk = (username) => {
 document.getElementById('log-out').addEventListener("click", () => {
     location.reload();
 });
+
+document.getElementById('pass-error').addEventListener('click' , ()=>{
+    swal('Password Error', "Password must be 8-16 characters and contain number and Uppercase letters and special characters", "warning");
+})
